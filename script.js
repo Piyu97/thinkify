@@ -200,7 +200,7 @@ function getCards(arr) {
     var table = []
     for (var i = 0; i < Math.floor(arr.length); i++) {
         table.push(card(arr[i]))
-        if (i == 50)
+        if (i == Math.floor(arr.length/2))
             break;
     }
     displayMovie(table)
@@ -222,4 +222,21 @@ function displayMovie(arr) {
     }
     div1.appendChild(div2)
     parent.appendChild(div1)
+}
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () { scrollFunction() };
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
 }

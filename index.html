@@ -11,17 +11,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-</head>
+    </head>
 
 <body>
     <h2 id="nav" class="text-center py-3"></h2>
-    <h3 class="text-center">
+    <h3 class="text-center my-3 ">
         Movie Ticket System
     </h3>
-    <label>Search by Movie or theatre</label>
-
+    <div class="d-flex justify-content-center my-4">
+    <h5 class="ml-5 mr-2">Search by Movie or theatre</h5>
+    
     <input type="text" id="movie">
-
+    
     <select id="genre">
         <option value="default">Select Genre</option>
         <option value="Drama">Drama</option>
@@ -33,11 +34,11 @@
         <option value="Action">Action</option>
         <option value="Animation">Animation</option>
     </select>
-
+    
     <select id="language">
         <option value="default">Select language</option>
     </select>
-
+    
     <select id="distance">
         <option value="default">0</option>
         <option value="5">5km</option>
@@ -45,9 +46,10 @@
         <option value="15">15km</option>
         <option value="20">20km</option>
     </select>
-
+    </div>
     <div id="displayMovie"></div>
-    <h3 id="footer" class="text-center py-3"></h3>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <h3 id="footer" class="text-center py-2"></h3>
     <script src="script.js"></script>
     <script src="common.js"></script>
 </body>
