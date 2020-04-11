@@ -5,20 +5,20 @@ var latitude = -6.6906402
 var longitude = -35.5000999
 
 // setting the backgroundColor
-var bodyElem=document.querySelector("body")
-bodyElem.style.backgroundColor="lightblue"
+var bodyElem = document.querySelector("body")
+bodyElem.style.backgroundColor = "lightblue"
 
 
 // to set the border of input on Focus or Blur
-var inp=document.querySelector("input")
-inp.addEventListener("focus",borderFocus)
-inp.addEventListener("blur",borderBlur)
+var inp = document.querySelector("input")
+inp.addEventListener("focus", borderFocus)
+inp.addEventListener("blur", borderBlur)
 
-function borderFocus(){
-    inp.style.border="5px solid green"
+function borderFocus() {
+    inp.style.border = "5px solid green"
 }
-function borderBlur(){
-    inp.style.border="2px solid red"
+function borderBlur() {
+    inp.style.border = "2px solid red"
 }
 
 // function executed when the document is loading
@@ -121,7 +121,7 @@ function filterBasedOnDistance() {
         var latitude1 = element.latitude
         var longitude1 = element.latitude
         var range = distance(latitude1, longitude1, latitude, longitude, "K")
-        if (range % 10<= distance1.value)
+        if (range % 10 <= distance1.value)
             return true
         else return false
 
@@ -178,26 +178,26 @@ function card(obj) {
         localStorage.setItem("count", 0)
         window.location.href = "theatre.html"
     }
-    div1.addEventListener("mouseover",mouseOverIt)
-    function mouseOverIt(){
-        div1.style.position="relative"
-        div1.style.bottom="20px"
-        div1.style.border="1px solid red"
+    div1.addEventListener("mouseover", mouseOverIt)
+    function mouseOverIt() {
+        div1.style.position = "relative"
+        div1.style.bottom = "20px"
+        div1.style.border = "1px solid red"
     }
 
-    div1.addEventListener("mouseleave",mouseOverOut)
-    function mouseOverOut(){
-        div1.style.bottom="0px"
-        div1.style.border="1px solid yellow"
+    div1.addEventListener("mouseleave", mouseOverOut)
+    function mouseOverOut() {
+        div1.style.bottom = "0px"
+        div1.style.border = "1px solid yellow"
 
     }
 
     div1.style.height = "500px"
     div1.style.borderTopLeftRadius = "40px"
-    div1.style.borderBottomRightRadius="40px"
-    img1.style.borderTopLeftRadius="40px"
-    div1.style.border="2px solid black"
-    h5.style.textDecoration="underline"
+    div1.style.borderBottomRightRadius = "40px"
+    img1.style.borderTopLeftRadius = "40px"
+    div1.style.border = "2px solid black"
+    h5.style.textDecoration = "underline"
     p1.textContent = `Language - ${obj["language"]}`
     p2.textContent = ` Genre - ${obj["genre"]}`
     h5.textContent = obj["title"]
@@ -234,7 +234,7 @@ function getCards(arr) {
     var table = []
     for (var i = 0; i < Math.floor(arr.length); i++) {
         table.push(card(arr[i]))
-        if (i > Math.floor(arr.length/2))
+        if (i > Math.floor(arr.length / 2))
             break;
     }
     displayMovie(table)
