@@ -1,6 +1,8 @@
 var theatreInfo=JSON.parse(localStorage.getItem("movie"))
 var count=localStorage.getItem("count")
 
+var bodyElem=document.querySelector("body")
+bodyElem.style.backgroundColor="lightblue"
 
 // following code to fill all the values on page
 var movie=document.getElementById("movie")
@@ -25,6 +27,8 @@ var language=document.getElementById("language")
 language.innerHTML=theatreInfo["language"]
 
 var total=document.getElementById("total")
+total.style.color="white"
+total.style.fontSize="40px"
 total.innerHTML=Number(theatreInfo["price"])*count
 
 var cancel=document.querySelector("#cancel")

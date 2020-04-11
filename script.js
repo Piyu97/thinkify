@@ -4,7 +4,22 @@ var uniqueLanguage = {}
 var latitude = -6.6906402
 var longitude = -35.5000999
 
+// setting the backgroundColor
+var bodyElem=document.querySelector("body")
+bodyElem.style.backgroundColor="lightblue"
 
+
+// to set the border of input on Focus or Blur
+var inp=document.querySelector("input")
+inp.addEventListener("focus",borderFocus)
+inp.addEventListener("blur",borderBlur)
+
+function borderFocus(){
+    inp.style.border="5px solid green"
+}
+function borderBlur(){
+    inp.style.border="2px solid red"
+}
 
 // function executed when the document is loading
 document.onload = () => {
@@ -103,10 +118,10 @@ var distance1 = document.getElementById("distance")
 distance1.addEventListener("change", filterBasedOnDistance)
 function filterBasedOnDistance() {
     var newArr = database.filter((element) => {
-        var lat1 = element.latitude
-        var lon1 = element.latitude
-        var table = distance(lat1, lon1, latitude, longitude, "K")
-        if (table % 10 <= distance1.value)
+        var latitude1 = element.latitude
+        var longitude1 = element.latitude
+        var range = distance(latitude1, longitude1, latitude, longitude, "K")
+        if (range % 10<= distance1.value)
             return true
         else return false
 
@@ -163,24 +178,43 @@ function card(obj) {
         localStorage.setItem("count", 0)
         window.location.href = "theatre.html"
     }
+    div1.addEventListener("mouseover",mouseOverIt)
+    function mouseOverIt(){
+        div1.style.position="relative"
+        div1.style.bottom="20px"
+        div1.style.border="1px solid red"
+    }
+
+    div1.addEventListener("mouseleave",mouseOverOut)
+    function mouseOverOut(){
+        div1.style.bottom="0px"
+        div1.style.border="1px solid yellow"
+
+    }
 
     div1.style.height = "500px"
-    p1.textContent = obj["language"]
-    p2.textContent = obj["genre"]
+    div1.style.borderTopLeftRadius = "40px"
+    div1.style.borderBottomRightRadius="40px"
+    img1.style.borderTopLeftRadius="40px"
+    div1.style.border="2px solid black"
+    h5.style.textDecoration="underline"
+    p1.textContent = `Language - ${obj["language"]}`
+    p2.textContent = ` Genre - ${obj["genre"]}`
     h5.textContent = obj["title"]
-    address.textContent = obj["theatre_address"]
-    price.textContent = obj["price"]
+    address.textContent = ` Address ${obj["theatre_address"]}`
+    price.textContent = `${obj["price"]} Rupees`
     theatre.textContent = obj["theatre"]
 
     div1.setAttribute("id", obj["id"])
     div1.setAttribute("class", "card")
-    img1.setAttribute("src", "https://images.unsplash.com/photo-1533488765986-dfa2a9939acd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
+    img1.setAttribute("src", "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60")
     img1.setAttribute("class", "image-size")
     img1.setAttribute("class", "card-img-top")
     div2.setAttribute("class", "card-body")
     h5.setAttribute("class", "card-title")
     p1.setAttribute("class", "card-text")
     p2.setAttribute("class", "card-text")
+    address.setAttribute("class", "my-3")
 
     div1.appendChild(img1)
     div2.appendChild(h5)
@@ -200,7 +234,7 @@ function getCards(arr) {
     var table = []
     for (var i = 0; i < Math.floor(arr.length); i++) {
         table.push(card(arr[i]))
-        if (i == Math.floor(arr.length/2))
+        if (i > Math.floor(arr.length/2))
             break;
     }
     displayMovie(table)
@@ -223,6 +257,7 @@ function displayMovie(arr) {
     div1.appendChild(div2)
     parent.appendChild(div1)
 }
+
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () { scrollFunction() };
