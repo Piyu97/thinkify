@@ -1,6 +1,6 @@
 var database = []
 var uniqueLanguage = {}
-
+var uniqueMovies = {}
 var latitude = -6.6906402
 var longitude = -35.5000999
 
@@ -14,12 +14,16 @@ var inp = document.querySelector("input")
 inp.addEventListener("focus", borderFocus)
 inp.addEventListener("blur", borderBlur)
 
+
+
 function borderFocus() {
     inp.style.border = "5px solid green"
 }
 function borderBlur() {
     inp.style.border = "2px solid red"
 }
+
+
 
 // function executed when the document is loading
 document.onload = () => {
@@ -43,6 +47,8 @@ const getMovie = () => {
     console.log(newArr)
     getCards(newArr)
 }
+
+
 
 // debounce logic
 const debounceMovieSearch = function (fnc, limit) {
@@ -74,6 +80,49 @@ const uniqueLan = (uniqueLanguage) => {
 
 
 
+// append all the unique Movies as a datalist
+const uniqueMov = (uniqueMovies) => {
+    var parentMov = document.querySelector("datalist")
+    var parentAllMovies = document.querySelector("#allMovies")
+    for (key in uniqueMovies) {
+        var option = document.createElement("option")
+        option.setAttribute("value", key)
+        option.textContent = key
+        parentAllMovies.appendChild(option)
+        parentMov.appendChild(option)
+    }
+    console.log(parentMov)
+}
+
+
+
+// append all the unique Movies to select tag
+var parentAllMovies = document.querySelector("#allMovies")
+const allMovies = (uniqueMovies) => {
+    for (key in uniqueMovies) {
+        var option = document.createElement("option")
+        option.setAttribute("value", key)
+        option.textContent = key
+        parentAllMovies.appendChild(option)
+    }
+}
+
+
+
+// filter the movie based on genre
+const getSearchedMovie = (e) => {
+    if (parentAllMovies.value == "default") {
+        getCards(database)
+    }
+    else {
+        var newArr = database.filter((element) =>element.title==e.target.value)
+        getCards(newArr)
+    }
+}
+parentAllMovies.addEventListener("change",getSearchedMovie)
+
+
+
 // initial function that is being called
 function calling() {
     fetch("http://www.json-generator.com/api/json/get/bZSAbuyAKq?indent=2")
@@ -83,11 +132,16 @@ function calling() {
             localStorage.setItem("data", JSON.stringify(res))
             for (let i = 0; i < res.length; i++) {
                 uniqueLanguage[res[i]["language"]] = 1
+                uniqueMovies[res[i]["title"]] = 1
             }
             uniqueLan(uniqueLanguage)
+            uniqueMov(uniqueMovies)
+            allMovies(uniqueMovies)
         })
     getCards(JSON.parse(localStorage.getItem("data")))
 }
+
+
 
 // logic to convert distance in kilometers
 function distance(lat1, lon1, lat2, lon2, unit) {
@@ -160,6 +214,7 @@ const filterBasedOnLanguage = () => {
 language.addEventListener("change", filterBasedOnLanguage)
 
 
+
 // function to make an individual card
 function card(obj) {
     var div1 = document.createElement("div")
@@ -228,6 +283,8 @@ function card(obj) {
 }
 
 
+
+
 // function to get all the cards
 function getCards(arr) {
     console.log(arr)
@@ -239,6 +296,8 @@ function getCards(arr) {
     }
     displayMovie(table)
 }
+
+
 
 // function to display all the cards on the page
 function displayMovie(arr) {
@@ -257,6 +316,7 @@ function displayMovie(arr) {
     div1.appendChild(div2)
     parent.appendChild(div1)
 }
+
 
 
 // When the user scrolls down 20px from the top of the document, show the button

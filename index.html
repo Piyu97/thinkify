@@ -21,8 +21,11 @@
     <div class="d-flex justify-content-center my-4">
         <h5 class="ml-5 mr-2">Search by Movie or theatre</h5>
 
-        <input type="text" id="movie">
-
+        <input type="text" id="movie" list="movies">
+        <datalist id="movies"></datalist>
+        <select id="allMovies">
+            <option value="default">All</option>
+        </select>
         <select id="genre">
             <option value="default">Select Genre</option>
             <option value="Drama">Drama</option>
