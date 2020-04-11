@@ -1,3 +1,18 @@
 .image-size{
     width:20%;
 }
+.card-size{
+    width:50%;
+}
+
+#seats{
+    display:grid;
+    grid-template-columns: repeat(10,1fr);
+    grid-template-rows: repeat(5,50px);
+    grid-gap: 20px;
+}
+
+#seats div{
+    text-align: center;
+    align-self: center;
+}

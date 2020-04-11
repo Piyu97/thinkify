@@ -14,10 +14,11 @@
 </head>
 
 <body>
+    <h2 id="nav" class="text-center py-3"></h2>
     <h3 class="text-center">
         Movie Ticket System
     </h3>
-    <label>Search For A Movie</label>
+    <label>Search by Movie or theatre</label>
 
     <input type="text" id="movie">
 
@@ -34,11 +35,11 @@
     </select>
 
     <select id="language">
-        <option>Select language</option>
+        <option value="default">Select language</option>
     </select>
 
     <select id="distance">
-        <option value="0">0</option>
+        <option value="default">0</option>
         <option value="5">5km</option>
         <option value="10">10km</option>
         <option value="15">15km</option>
@@ -46,8 +47,9 @@
     </select>
 
     <div id="displayMovie"></div>
-
+    <h3 id="footer" class="text-center py-3"></h3>
     <script src="script.js"></script>
+    <script src="common.js"></script>
 </body>
 
 </html>

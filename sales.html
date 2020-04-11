@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckOut Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+</head>
+
+<body>
+    <h2 id="nav" class="text-center py-3"></h2>
+    <div class="d-flex justify-content-center border shadow-lg p-3 mb-5 mx-auto my-5 bg-white rounded card-size">
+        <div class="card-size ">
+            <h3 class="text-center my-5"><u>Summary</u></h3>
+            <div class="clearfix my-2">
+                <h4 class="float-left" >Movie</h4>
+                <div class="float-right " id="movie"></div>
+            </div>
+            <div class="clearfix my-3">
+                <h4 class="float-left" >Theatre</h4>
+                <div class="float-right" id="theatre"></div>
+            </div>
+            <div class="clearfix my-2">
+                <h4 class="float-left" >Genre</h4>
+                <div class="float-right" id="genre"></div>
+            </div>
+            <div class="clearfix my-3">
+                <h4 class="float-left" >Language</h4>
+                <div class="float-right" id="language"></div>
+            </div>
+            <div class="clearfix my-2">
+                <h4 class="float-left" >Address</h4>
+                <div class="float-right" id="address"></div>
+            </div>
+            <div class="clearfix my-2">
+                <h4 class="float-left" >No of people</h4>
+                <div class="float-right" id="number"></div>
+            </div>
+            <div class="clearfix my-3">
+                <h4 class="float-left" >Price per Ticket</h4>
+                <div class="float-right" id="price"></div>
+            </div>
+
+            <div class="clearfix my-2">
+                <h2 class="text-center" >Total</h2>
+            </div>
+            <div class="clearfix my-2">
+                <h4 class="text-center bg-success" id="total" >Total</h4>
+            </div>
+        </div>
+    </div>
+<h3 class="text-center">If you wish to CANCEL press the button <button id="cancel" class="btn btn-danger">Cancel</button></h3>
+
+
+    <h3 id="footer" class="text-center py-2"></h3>
+    <script src="sales.js"></script>
+    <script src="common.js"></script>
+
+</body>
+
+</html>

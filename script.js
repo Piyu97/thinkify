@@ -1,22 +1,35 @@
-
-// window.onload(){
-//     alert("window")
-// }
-
-
 var database = []
 var uniqueLanguage = {}
+
+var latitude = -6.6906402
+var longitude = -35.5000999
+
+
+
+// function executed when the document is loading
 document.onload = () => {
-    calling()
+    (function () {
+        alert("Welcome to Booking My Show !!");
+        calling()
+    })();
 }
 document.onload()
 
-const getMovie=()=> {
-    var newArr = database.filter((element) =>element.title.toLowerCase().includes(document.getElementById("movie").value))
+
+
+const getMovie = () => {
+    var newArr = database.filter((element) => {
+        return (
+            element.title.toLowerCase().includes(document.getElementById("movie").value)
+            ||
+            element.theatre.toLowerCase().includes(document.getElementById("movie").value)
+        )
+    })
     console.log(newArr)
-     getCards(newArr)
+    getCards(newArr)
 }
 
+// debounce logic
 const debounceMovieSearch = function (fnc, limit) {
     let timer;
     return function () {
@@ -26,13 +39,15 @@ const debounceMovieSearch = function (fnc, limit) {
         }, limit)
     }
 }
-const searchMovie = debounceMovieSearch(getMovie, 400)
+
+
+const searchMovie = debounceMovieSearch(getMovie, 200)
 document.getElementById("movie").addEventListener("keyup", searchMovie)
 
 
 
 // append all the unique languages 
-function uniqueLan(uniqueLanguage) {
+const uniqueLan = (uniqueLanguage) => {
     var parentLang = document.getElementById("language")
     for (key in uniqueLanguage) {
         var option = document.createElement("option")
@@ -44,7 +59,7 @@ function uniqueLan(uniqueLanguage) {
 
 
 
-
+// initial function that is being called
 function calling() {
     fetch("http://www.json-generator.com/api/json/get/bZSAbuyAKq?indent=2")
         .then(res => res.json())
@@ -59,31 +74,75 @@ function calling() {
     getCards(JSON.parse(localStorage.getItem("data")))
 }
 
+// logic to convert distance in kilometers
+function distance(lat1, lon1, lat2, lon2, unit) {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+        return false;
+    }
+    else {
+        var radlat1 = Math.PI * lat1 / 180;
+        var radlat2 = Math.PI * lat2 / 180;
+        var theta = lon1 - lon2;
+        var radtheta = Math.PI * theta / 180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+            dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+        if (unit == "K") { dist = dist * 1.609344 }
+        if (unit == "N") { dist = dist * 0.8684 }
+        return dist;
+    }
+}
+
+
 // filter the theatre based on distance between source and destination
-var distance = document.getElementById("distance")
-distance.addEventListener("change", filterBasedOnDistance)
+var distance1 = document.getElementById("distance")
+distance1.addEventListener("change", filterBasedOnDistance)
 function filterBasedOnDistance() {
-    console.log(distance.value)
+    var newArr = database.filter((element) => {
+        var lat1 = element.latitude
+        var lon1 = element.latitude
+        var table = distance(lat1, lon1, latitude, longitude, "K")
+        if (table % 10 <= distance1.value)
+            return true
+        else return false
+
+    })
+    console.log(newArr)
+    getCards(newArr)
 }
 
 
 // filter the movie based on genre
 var genre = document.getElementById("genre")
-genre.addEventListener("change", filterBasedOnGenre)
-function filterBasedOnGenre() {
-    var newArr = database.filter((element) => element.genre.includes(genre.value))
-    getCards(newArr)
+const filterBasedOnGenre = () => {
+    if (genre.value == "default") {
+        getCards(database)
+    }
+    else {
+        var newArr = database.filter((element) => element.genre.includes(genre.value))
+        getCards(newArr)
+    }
 }
+genre.addEventListener("change", filterBasedOnGenre)
 
 
 
 // filter the movies based on language
 var language = document.getElementById("language")
-language.addEventListener("change", filterBasedOnLanguage)
-function filterBasedOnLanguage() {
-    var newArr = database.filter((element) => element.language == language.value)
-    getCards(newArr)
+const filterBasedOnLanguage = () => {
+    if (language.value == "default") {
+        getCards(database)
+    }
+    else {
+        var newArr = database.filter((element) => element.language == language.value)
+        getCards(newArr)
+    }
 }
+language.addEventListener("change", filterBasedOnLanguage)
 
 
 // function to make an individual card
@@ -94,24 +153,24 @@ function card(obj) {
     var h5 = document.createElement("h5")
     var p1 = document.createElement("p")
     var p2 = document.createElement("p")
-    var address=document.createElement("address")
-    var price=document.createElement("div")
-    var theatre=document.createElement("div")
+    var address = document.createElement("address")
+    var price = document.createElement("div")
+    var theatre = document.createElement("div")
 
-    div1.addEventListener("click",theatrecheck)
-    function theatrecheck(e)
-    {
-        localStorage.setItem("movie",JSON.stringify(obj))
-        window.location.href="theatre.html"
+    div1.addEventListener("click", theatrecheck)
+    function theatrecheck(e) {
+        localStorage.setItem("movie", JSON.stringify(obj))
+        localStorage.setItem("count", 0)
+        window.location.href = "theatre.html"
     }
 
-    div1.style.height="500px"
+    div1.style.height = "500px"
     p1.textContent = obj["language"]
     p2.textContent = obj["genre"]
     h5.textContent = obj["title"]
-    address.textContent=obj["theatre_address"]
-    price.textContent=obj["price"]
-    theatre.textContent=obj["theatre"]
+    address.textContent = obj["theatre_address"]
+    price.textContent = obj["price"]
+    theatre.textContent = obj["theatre"]
 
     div1.setAttribute("id", obj["id"])
     div1.setAttribute("class", "card")
@@ -139,13 +198,13 @@ function card(obj) {
 function getCards(arr) {
     console.log(arr)
     var table = []
-    for (var i = 0; i < Math.floor(arr.length/2)-2; i++) {
+    for (var i = 0; i < Math.floor(arr.length); i++) {
         table.push(card(arr[i]))
+        if (i == 50)
+            break;
     }
-    console.log(table)
     displayMovie(table)
 }
-
 
 // function to display all the cards on the page
 function displayMovie(arr) {
