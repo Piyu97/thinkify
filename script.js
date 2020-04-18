@@ -8,26 +8,9 @@ var longitude = -35.5000999
 var bodyElem = document.querySelector("body")
 bodyElem.style.backgroundColor = "lightblue"
 
-
-// to set the border of input on Focus or Blur
-var inp = document.querySelector("input")
-inp.addEventListener("focus", borderFocus)
-inp.addEventListener("blur", borderBlur)
-
-
-
-function borderFocus() {
-    inp.style.border = "5px solid green"
-}
-function borderBlur() {
-    inp.style.border = "2px solid red"
-}
-
-
-
 // function executed when the document is loading
 document.onload = () => {
-    (function () {
+    (function() {
         alert("Welcome to Booking My Show !!");
         calling()
     })();
@@ -37,23 +20,21 @@ document.onload()
 
 
 const getMovie = () => {
+    let search = document.getElementById("movie").value
     var newArr = database.filter((element) => {
         return (
-            element.title.toLowerCase().includes(document.getElementById("movie").value)
-            ||
-            element.theatre.toLowerCase().includes(document.getElementById("movie").value)
+            element.title.toLowerCase().includes(search) || element.theatre.toLowerCase().includes(search)
         )
     })
-    console.log(newArr)
     getCards(newArr)
 }
 
 
 
 // debounce logic
-const debounceMovieSearch = function (fnc, limit) {
+const debounceMovieSearch = function(fnc, limit) {
     let timer;
-    return function () {
+    return function() {
         clearInterval(timer)
         timer = setTimeout(() => {
             fnc()
@@ -91,7 +72,6 @@ const uniqueMov = (uniqueMovies) => {
         parentAllMovies.appendChild(option)
         parentMov.appendChild(option)
     }
-    console.log(parentMov)
 }
 
 
@@ -113,13 +93,12 @@ const allMovies = (uniqueMovies) => {
 const getSearchedMovie = (e) => {
     if (parentAllMovies.value == "default") {
         getCards(database)
-    }
-    else {
-        var newArr = database.filter((element) =>element.title==e.target.value)
+    } else {
+        var newArr = database.filter((element) => element.title == e.target.value)
         getCards(newArr)
     }
 }
-parentAllMovies.addEventListener("change",getSearchedMovie)
+parentAllMovies.addEventListener("change", getSearchedMovie)
 
 
 
@@ -138,7 +117,7 @@ function calling() {
             uniqueMov(uniqueMovies)
             allMovies(uniqueMovies)
         })
-    getCards(JSON.parse(localStorage.getItem("data")))
+        .then(getCards(JSON.parse(localStorage.getItem("data"))))
 }
 
 
@@ -147,8 +126,7 @@ function calling() {
 function distance(lat1, lon1, lat2, lon2, unit) {
     if ((lat1 == lat2) && (lon1 == lon2)) {
         return false;
-    }
-    else {
+    } else {
         var radlat1 = Math.PI * lat1 / 180;
         var radlat2 = Math.PI * lat2 / 180;
         var theta = lon1 - lon2;
@@ -170,6 +148,7 @@ function distance(lat1, lon1, lat2, lon2, unit) {
 // filter the theatre based on distance between source and destination
 var distance1 = document.getElementById("distance")
 distance1.addEventListener("change", filterBasedOnDistance)
+
 function filterBasedOnDistance() {
     var newArr = database.filter((element) => {
         var latitude1 = element.latitude
@@ -180,38 +159,10 @@ function filterBasedOnDistance() {
         else return false
 
     })
-    console.log(newArr)
     getCards(newArr)
 }
 
 
-// filter the movie based on genre
-var genre = document.getElementById("genre")
-const filterBasedOnGenre = () => {
-    if (genre.value == "default") {
-        getCards(database)
-    }
-    else {
-        var newArr = database.filter((element) => element.genre.includes(genre.value))
-        getCards(newArr)
-    }
-}
-genre.addEventListener("change", filterBasedOnGenre)
-
-
-
-// filter the movies based on language
-var language = document.getElementById("language")
-const filterBasedOnLanguage = () => {
-    if (language.value == "default") {
-        getCards(database)
-    }
-    else {
-        var newArr = database.filter((element) => element.language == language.value)
-        getCards(newArr)
-    }
-}
-language.addEventListener("change", filterBasedOnLanguage)
 
 
 
@@ -228,12 +179,14 @@ function card(obj) {
     var theatre = document.createElement("div")
 
     div1.addEventListener("click", theatrecheck)
+
     function theatrecheck(e) {
         localStorage.setItem("movie", JSON.stringify(obj))
         localStorage.setItem("count", 0)
         window.location.href = "theatre.html"
     }
     div1.addEventListener("mouseover", mouseOverIt)
+
     function mouseOverIt() {
         div1.style.position = "relative"
         div1.style.bottom = "20px"
@@ -241,6 +194,7 @@ function card(obj) {
     }
 
     div1.addEventListener("mouseleave", mouseOverOut)
+
     function mouseOverOut() {
         div1.style.bottom = "0px"
         div1.style.border = "1px solid yellow"
@@ -319,8 +273,12 @@ function displayMovie(arr) {
 
 
 
+
+
+
+
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function () { scrollFunction() };
+window.onscroll = function() { scrollFunction() };
 
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -335,3 +293,44 @@ function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+
+// to set the border of input on Focus or Blur
+var inp = document.querySelector("input")
+inp.addEventListener("focus", borderFocus)
+inp.addEventListener("blur", borderBlur)
+
+
+
+function borderFocus() {
+    inp.style.border = "5px solid green"
+}
+
+function borderBlur() {
+    inp.style.border = "2px solid red"
+}
+
+// filter the movie based on genre
+var genre = document.getElementById("genre")
+const filterBasedOnGenre = () => {
+    if (genre.value == "default") {
+        getCards(database)
+    } else {
+        var newArr = database.filter((element) => element.genre.includes(genre.value))
+        getCards(newArr)
+    }
+}
+genre.addEventListener("change", filterBasedOnGenre)
+
+
+
+// filter the movies based on language
+var language = document.getElementById("language")
+const filterBasedOnLanguage = () => {
+    if (language.value == "default") {
+        getCards(database)
+    } else {
+        var newArr = database.filter((element) => element.language == language.value)
+        getCards(newArr)
+    }
+}
+language.addEventListener("change", filterBasedOnLanguage)

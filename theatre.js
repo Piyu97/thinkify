@@ -20,19 +20,16 @@ for (let i = 1; i <= 50; i++) {
 
 // maintaining the count of seats selected
 var count = 0
+
 function selectedSeat(e) {
     if (e.target.style.backgroundColor == "green") {
         ++count
-        console.log(count)
         e.target.style.backgroundColor = "red"
         e.target.style.color = "white"
-    }
-    else {
+    } else {
         --count
-        console.log(count)
         e.target.style.backgroundColor = "green"
         e.target.style.color = "black"
-
     }
 }
 

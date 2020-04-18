@@ -26,10 +26,15 @@ genre.innerHTML = theatreInfo["genre"]
 var language = document.getElementById("language")
 language.innerHTML = theatreInfo["language"]
 
+
+
 var total = document.getElementById("total")
 total.style.color = "white"
 total.style.fontSize = "40px"
 total.innerHTML = Number(theatreInfo["price"]) * count
+
+
+
 
 var cancel = document.querySelector("#cancel")
 cancel.addEventListener("click", cancelBooking)
